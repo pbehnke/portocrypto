@@ -1,0 +1,43 @@
+<!-- Modal for History -->
+<div id="historyModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Transaction History</h4>
+      </div>
+        <div class="modal-body">
+
+
+          <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th>Id</th>
+                          <th>Number</th>
+                          <th>Price</th>
+                          <th>Transacted</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for tran in trans %}
+                          <tr>
+                              <td>{{ tran.id }}</td>
+                              <td>{{ tran.number }}</td>
+                              <td>{{ tran.price | usd }}</td>
+                              <td>{{ tran.timestamp }}</td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+
+
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

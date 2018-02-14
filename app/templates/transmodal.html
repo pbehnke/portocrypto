@@ -1,0 +1,62 @@
+<!-- Modal for transactions -->
+<div id="transModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <!-- Modal header-->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 id="transTitle" class="modal-title"></h4>
+      </div>
+
+      <!-- Modal body-->
+      <div class="modal-body">
+        <p id="transPriceText"></p>
+        <p id="transTotal"></p>
+        <p id="transCash"></p>
+        <p id="maxCoins"></p>
+        <p></p>
+
+        <!-- Form-->
+        <form id="transFormID" method="post" data-toggle="validator" role="form">
+
+
+          <input id="csrf_trans" name="csrf_token" type="hidden" value="">
+
+
+          <div id="transFormGroup" class="form-group has-danger">
+            <label for="transNumber" class="control-label">Amount</label>
+            <div class="input-group">
+              <span class="input-group-addon">0.00</span>
+              {{ transform.number(id="transNumber", class="form-control", type="number", placeholder="0.00", step="0.00000000000000001", min="0.000000000001") }}
+            </div>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
+          </div>
+
+
+          {{ transform.price(id="transPrice", type="hidden")}}
+          {{ transform.short(id="transShort", type="hidden")}}
+          {{ transform.longname(id="transLong", type="hidden")}}
+          {{ transform.buyOrsell(id="bOs", type="hidden")}}
+          <input id="userid" name="userid" type="hidden" value={{ current_user.id }}>
+
+          <div class="form-group">
+            {{ transform.submit(id="transSubmit", class="btn btn-primary btn-block disabled") }}
+          </div>
+
+        </form>
+
+      </div>
+
+      <!-- Modal Footer-->
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div id="loginModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Login</h4>
+      </div>
+        <div class="modal-body">
+          <form id="loginForm" data-toggle="validator" role="form" method="post">
+            <fieldset>
+                {{ logform.hidden_tag() }}
+                <div class="form-group">
+                  <label for="loginUser" class="control-label">Username</label>
+                  {{ logform.username(id="loginUser", class="form-control", placeholder="Username", size = 20) }}
+                  <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group">
+                  <label for="loginPw" class="control-label">Password</label>
+                  {{ logform.password(id="loginPw", class="form-control", placeholder="Password", size=20) }}
+                  <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group">
+                  <p></p>
+                  <p>{{ logform.remember_me() }} {{ logform.remember_me.label }}</p>
+                  {{ logform.submit(class="btn btn-default btn-block", id="loginSubmit") }}
+                </div>
+            </fieldset>
+          </form>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

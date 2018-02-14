@@ -1,0 +1,57 @@
+.container
+{
+    /* center contents */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* colors for logo */
+.navbar-default .navbar-brand .blue
+{
+    color: #33ccff;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+main td
+{
+    /* left-align tables' cells */
+    text-align: left;
+}
+
+
+/* colors for index */
+
+.red
+{
+    color: #ff0000;
+}
+
+.green
+{
+    color: #00cc00;
+}
+
+.coinstable
+{
+  cursor: pointer;
+}
+
+.errorLabelLog
+{
+  color: #DC143C;
+}
+
+.modal-body
+{
+  text-align: left;
+}
+
+#transNumber {
+    text-align: right;
+}

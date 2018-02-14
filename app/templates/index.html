@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Portfolio
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-sm-12">
+      {% if session.user_id %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Longname (short)</th>
+                    <th>Amount</th>
+                    <th>Time</th>
+                    <th>Price (bought g/l)</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan="4"></td>
+                    <td><span class="{{ 'red' if gtotaldiff < 10000 else 'green' }}">{{ gtotal | usd }}</span></td>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for coin in coins | sort(reverse=True, attribute='newtotal') %}
+                    <tr class="coinstable" onclick="openTransModal('S_{{ coin.short }}')">
+                        <td>{{ coin.longname }} ({{ coin.short }})</td>
+                        <td>{{ coin.number }}</td>
+                        <td>{{ coin.timestamp | time }}</td>
+                        <td>{{ coin.newprice | usd }} ({{ coin.price | number }} <span class="{{ 'red' if coin.pricediff < 0 else 'green' }}">{{ coin.pricediff | number }})</span></td>
+                        <td>{{ coin.newtotal | usd }} <span class="{{ 'red' if coin.totaldiff < 0 else 'green' }}">({{ coin.totaldiff | number}})</span></td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="4">CASH</td>
+                    <td>{{ cash | usd }}</td>
+                </tr>
+            </tbody>
+        </table>
+      {% endif %}
+      <div>
+      <p align="left">data provided by <a href="https://github.com/CoinCapDev/CoinCap.io">coincap.io</a></p>
+      </div>
+      <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Long (Short)</th>
+                    <th>Market Cap</th>
+                    <th>Price</th>
+                    <th>24h Volume</th>
+                    <th>%24h</th>
+                    <th>Available Supply</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for coin in frontcoins %}
+                  {% if session.user_id %}
+                    <tr class="coinstable" onclick="openTransModal('B_{{ coin.short }}')">
+                  {% else %}
+                    <tr class="coinstable" data-toggle="modal" data-target="#loginModal">
+                  {% endif %}
+                        <td>{{ loop.index }}</td>
+                        <td>{{ coin.long }} ({{ coin.short }})</td>
+                        <td>{{ coin.mktcap | usd }}</td>
+                        <td>{{ coin.price | usd }}</td>
+                        <td>{{ coin.usdVolume | usd }}</td>
+                        <td><span class="{{ 'red' if coin.perc < 0 else 'green' }}">{{ coin.perc | percent }}</span></td>
+                        <td>{{ coin.supply | wnumber }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+<!-- Modal for changing password -->
+<div id="changeModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Change Password</h4>
+      </div>
+        <div class="modal-body">
+
+          <form id="changeForm" method="post" data-toggle="validator" role="form">
+              <fieldset>
+                  <input id="csrf_change" name="csrf_token" type="hidden" value="">
+
+                  <div class="form-group">
+                    <label for="oldPW" class="control-label">Old Password</label>
+                    {{ changeform.oldPassword(id="oldPW", class="form-control", placeholder="Old Password", size=32)}}
+                    <div class="help-block with-errors"></div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label for="newPW" class="control-label">New Password</label>
+                      {{ changeform.newPassword(id="newPW", class="form-control", placeholder="New Password", size=32)}}
+                      <div class="help-block">Minimum of 6 characters</div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="newPWConfirm" class="control-label">Password Confirmation</label>
+                      <input type="password" class="form-control" id="newPWConfirm" data-match="#newPW" data-match-error="Passwords don't match" placeholder="Confirm" required>
+                      <div class="help-block with-errors"></div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                      {{ changeform.submit( id="changeSubmit", class="btn btn-primary btn-block") }}
+                  </div>
+              </fieldset>
+          </form>
+
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
