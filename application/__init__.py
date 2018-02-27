@@ -35,6 +35,6 @@ if application.config["DEBUG"]:
 # Session(application)
 
 # make jinja look in /templates folder
-loader = FileSystemLoader('/templates')
+loader = FileSystemLoader('/templates, /static')
 
 from application import routes, helpers, models
