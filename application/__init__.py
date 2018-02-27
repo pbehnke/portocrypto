@@ -32,7 +32,7 @@ if application.config["DEBUG"]:
         return response
 
 # start session
-# Session(app)
+# Session(application)
 
 # make jinja look in /templates folder
 loader = FileSystemLoader('/templates')

@@ -52,31 +52,3 @@ class ChangeForm(FlaskForm):
     oldPassword = PasswordField('oldPassword', validators=[DataRequired()])
     newPassword = PasswordField('newPassword', validators=[DataRequired()])
     submit = SubmitField()
-
-
-
-
-
-
-
-
-
-    #
-    # def validate_number(self, userid):
-    #     print(userid)
-            # userid = int(userid)
-            # cash = User.query.get(userid).cash
-            # print(cash)
-        # if buyOrsell:
-        #
-        #
-        # # validate buying
-        # else:
-        # user = User.query.filter_by(email=email.data).first()
-        # if user is not None:
-        #     raise ValidationError('Please use a different email address.')
-    #
-    # def validate_email(self, email):
-    #     user = User.query.filter_by(email=email.data).first()
-    #     if user is not None:
-    #         raise ValidationError('Please use a different email address.')
