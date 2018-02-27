@@ -1,8 +1,8 @@
 __pycache__/
-migrations/
 venv/
 .gitignore
 info.txt
 todo.txt
 application/__pycache__/
 .git/
+README.MD
