@@ -11,14 +11,9 @@ class Config(object):
     # SESSION_TYPE = "filesystem"
     DEBUG = True
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app.db')
+    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+    #     'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-
-
-
-
-    # app.config["SESSION_FILE_DIR"] = mkdtemp()
-    # app.config["SESSION_PERMANENT"] = False
-    # app.config["SESSION_TYPE"] = "filesystem"
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://matejmasteruser:Hh60600mmu@mydbinstance.cemwj7hglrfa.us-east-1.rds.amazonaws.com:3306/portoDB'
+    # 'mysql+pymysql://flaskdemo:flaskdemo@flaskdemo.cwsaehb7ywmi.us-east-1.rds.amazonaws.com:3306/flaskdemo'

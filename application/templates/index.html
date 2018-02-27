@@ -7,7 +7,7 @@
 {% block main %}
 <div class="row">
     <div class="col-sm-12">
-      {% if session.user_id %}
+      {% if current_user.id %}
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -59,7 +59,7 @@
             </thead>
             <tbody>
                 {% for coin in frontcoins %}
-                  {% if session.user_id %}
+                  {% if current_user.id %}
                     <tr class="coinstable" onclick="openTransModal('B_{{ coin.short }}')">
                   {% else %}
                     <tr class="coinstable" data-toggle="modal" data-target="#loginModal">
