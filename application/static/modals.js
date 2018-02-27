@@ -94,6 +94,8 @@ $( document ).ready(function() {
     }
 
     if (this.value > allData.coinsnumber) {
+      console.log(this.value)
+      console.log(allData.coinsnumber)
       $('#maxCoins').css('color', '#f04124');
     } else {
       $('#maxCoins').css('color', '#222222');

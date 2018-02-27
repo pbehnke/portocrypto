@@ -66,7 +66,7 @@ def transaction():
 
     transform = TransForm()
 
-    print("HERE: {}".format(transform.buyOrsell.data))
+    # print("HERE: {}".format(transform.buyOrsell.data))
 
     if transform.validate_on_submit():
         coin = Coins.query.filter_by(short=transform.short.data).first()
@@ -74,7 +74,7 @@ def transaction():
             addcoin = Coins(short=transform.short.data, longname=transform.longname.data)
             db.session.add(addcoin)
             db.session.commit()
-            print("added Coin")
+            # print("added Coin")
         # recognizing if buy or sell, if sell make number negative
         if transform.buyOrsell.data == 1:
             transform.number.data = -transform.number.data
@@ -169,5 +169,7 @@ def check():
 
     data['amount'] = amount
     data['cash'] = cash
+
+    print(data)
 
     return jsonify(data)

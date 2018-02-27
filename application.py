@@ -8,5 +8,5 @@ def make_shell_context():
     return {'db': db, 'User': User, 'Transactions': Transactions, 'Coins': Coins}
 
 if __name__ == "__main__":
-    application.debug = True
-    application.run()
+    # application.debug = True
+	application.run()

@@ -38,11 +38,11 @@ class TransForm(FlaskForm):
     submit = SubmitField()
 
     def validate_number(self, number):
-        print("forms.py Data: {}, {}".format(self.userid.data, self.short.data))
+        # print("forms.py Data: {}, {}".format(self.userid.data, self.short.data))
         if self.buyOrsell.data and number.data > totalcoin(self.userid.data, self.short.data):
             raise ValidationError('Not enough coins.')
         else:
-            print("validating buy transaction")
+            # print("validating buy transaction")
             # buying (see if enough cash)
             cash = User.query.get(int(self.userid.data)).cash
             if (number.data * self.price.data) > cash:
