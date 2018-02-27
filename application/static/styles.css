@@ -37,6 +37,11 @@ main td
     color: #00cc00;
 }
 
+.blue
+{
+    color: #00FFFF;
+}
+
 .coinstable
 {
   cursor: pointer;

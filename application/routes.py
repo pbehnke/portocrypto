@@ -1,27 +1,28 @@
 import requests
-from app import app, db
-from app.helpers import *
-from app.forms import LoginForm, RegistrationForm, TransForm, ChangeForm
+from application import application, db
+from application.helpers import *
+from application.forms import LoginForm, RegistrationForm, TransForm, ChangeForm
 from flask_login import current_user, login_user,  login_required, logout_user
-from app.models import User, Transactions, Coins
+from application.models import User, Transactions, Coins
 from flask import Flask, flash, redirect, render_template, request, session, url_for, jsonify
 from passlib.apps import custom_app_context as pwd_context
 
 
-app.jinja_env.filters["usd"] = usd
-app.jinja_env.filters["percent"] = percent
-app.jinja_env.filters["number"] = number
-app.jinja_env.filters["time"] = timefilter
-app.jinja_env.filters["wnumber"] = wholenumber
+application.jinja_env.filters["usd"] = usd
+application.jinja_env.filters["percent"] = percent
+application.jinja_env.filters["number"] = number
+application.jinja_env.filters["time"] = timefilter
+application.jinja_env.filters["wnumber"] = wholenumber
 
-@app.route("/")
-@app.route('/index')
+@application.route("/")
+@application.route('/index')
 def index():
 
     #importing information on all coins for frontpage
     url = "http://coincap.io/front"
     frontcoins = requests.get(url)
     frontcoins = frontcoins.json()
+    # session.user_id=0
 
 
     # create Forms for index
@@ -58,14 +59,14 @@ def index():
 
     return render_template('index.html', frontcoins = frontcoins, title='Sign In', logform=logform, regform=regform, transform=transform, changeform=changeform)
 
-@app.route("/transaction", methods=['POST'])
+@application.route("/transaction", methods=['POST'])
 @login_required
 def transaction():
     """Buy or sell coins."""
 
     transform = TransForm()
 
-    print("HERE: {}".format(transform.buyOrsell.data))
+    # print("HERE: {}".format(transform.buyOrsell.data))
 
     if transform.validate_on_submit():
         coin = Coins.query.filter_by(short=transform.short.data).first()
@@ -73,7 +74,7 @@ def transaction():
             addcoin = Coins(short=transform.short.data, longname=transform.longname.data)
             db.session.add(addcoin)
             db.session.commit()
-            print("added Coin")
+            # print("added Coin")
         # recognizing if buy or sell, if sell make number negative
         if transform.buyOrsell.data == 1:
             transform.number.data = -transform.number.data
@@ -88,7 +89,7 @@ def transaction():
     flash('Error Error')
     return jsonify(transform.errors)
 
-@app.route("/login", methods=['POST'])
+@application.route("/login", methods=['POST'])
 def login():
     """Log user in."""
 
@@ -102,7 +103,7 @@ def login():
         return jsonify(status='ok')
     return jsonify("Error")
 
-@app.route("/logout")
+@application.route("/logout")
 @login_required
 def logout():
     """Log user out."""
@@ -110,7 +111,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route("/register", methods=["POST"])
+@application.route("/register", methods=["POST"])
 def register():
     """Register user."""
 
@@ -124,7 +125,7 @@ def register():
         return jsonify(status='ok')
     return jsonify(regform.errors)
 
-@app.route("/password", methods=["POST"])
+@application.route("/password", methods=["POST"])
 @login_required
 def password():
     """Change password."""
@@ -142,7 +143,7 @@ def password():
         return jsonify(status='ok')
     return jsonify("Error")
 
-@app.route("/check", methods=['POST'])
+@application.route("/check", methods=['POST'])
 def check():
 
     data = {}
@@ -168,5 +169,7 @@ def check():
 
     data['amount'] = amount
     data['cash'] = cash
+
+    print(data)
 
     return jsonify(data)

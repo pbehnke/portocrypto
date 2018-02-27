@@ -1,4 +1,4 @@
-from app.models import User, Coins
+from application.models import User, Coins
 
 def usd(value):
     """Formats value as USD."""

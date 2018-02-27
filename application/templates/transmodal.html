@@ -41,11 +41,11 @@
             <div class="help-block with-errors"></div>
           </div>
 
-
           {{ transform.price(id="transPrice", type="hidden")}}
           {{ transform.short(id="transShort", type="hidden")}}
           {{ transform.longname(id="transLong", type="hidden")}}
           {{ transform.buyOrsell(id="bOs", type="hidden")}}
+
           <input id="userid" name="userid" type="hidden" value={{ current_user.id }}>
 
           <div class="form-group">
