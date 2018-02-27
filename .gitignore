@@ -1,0 +1,10 @@
+__pycache__/
+venv/
+application/__pycache__/
+.git/
+configlocal.py
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

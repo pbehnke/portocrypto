@@ -84,8 +84,19 @@ $( document ).ready(function() {
 
     if (buyOrSell === "S") {
       $('#transCash').text("Cash: $" + (allData.cash + totalAmount));
+      if (this.value > allData.coinsnumber) {
+        $('#maxCoins').css('color', '#f04124');
+      } else {
+        $('#maxCoins').css('color', '#222222');
+      }
     } else {
       $('#transCash').text("Cash: $" + (allData.cash - totalAmount));
+      if (this.value > allData.amount) {
+        $('#maxCoins').css('color', '#f04124');
+      } else {
+        $('#maxCoins').css('color', '#222222');
+      }
+
     }
 
     if ($('#transNumber').val() === "") {
@@ -93,15 +104,9 @@ $( document ).ready(function() {
       $('#transFormID').validator()
     }
 
-    if (this.value > allData.coinsnumber) {
-      console.log(this.value)
-      console.log(allData.coinsnumber)
-      $('#maxCoins').css('color', '#f04124');
-    } else {
-      $('#maxCoins').css('color', '#222222');
-    }
-
   })
+
+
   // adding required and data-error attribut workaround to prevent jinja error
   $("#transNumber").attr('data-error', 'Invalid Input');
 
