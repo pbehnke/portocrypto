@@ -22,8 +22,8 @@ def totalcoin(userid, short):
     coinsnumber = 0.0
     for coin in coins:
         coinsnumber += coin.number
-    print("helpers.py Totalcoin: {}".format(coinsnumber))
+    # print("helpers.py Totalcoin: {}".format(coinsnumber))
     return coinsnumber
 
 def timefilter(value):
-    return str(value)[:-4]
+    return str(value)[:-3]

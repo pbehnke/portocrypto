@@ -142,25 +142,8 @@ $( document ).ready(function() {
 
 function openTransModal(short){
 
-  // var mydiv = $('#tester')
 
 
-  function newDate(days) {
-    return moment().add(days, 'd');
-  }
-
-  // configure chart
-  var ctx = document.getElementById("myChart");
-  var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ["0s", "10s", "20s", "30s", "40s", "50s", "60s"],
-      datasets: [{
-        label: "Year",
-        data: [0, 59, 75, 20, 20, 55, 40]
-      }]
-    }
-  });
 
 
 

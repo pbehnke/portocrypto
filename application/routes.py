@@ -54,6 +54,7 @@ def index():
             gtotal += t.newtotal
             t.pricediff = t.newprice - t.price
             t.totaldiff = (t.newprice * t.number) - (t.price * t.number)
+            t.allcoin = totalcoin(current_user.id, t.short)
 
         return render_template('index.html', frontcoins = frontcoins, title='Sign In', logform=logform, regform=regform, gtotaldiff = 10000, transform=transform, trans=trans, gtotal=gtotal, cash=cash, coins=trans, changeform=changeform)
 
@@ -66,7 +67,7 @@ def transaction():
 
     transform = TransForm()
 
-    # print("HERE: {}".format(transform.buyOrsell.data))
+    print("HERE: {}".format(transform.buyOrsell.data))
 
     if transform.validate_on_submit():
         coin = Coins.query.filter_by(short=transform.short.data).first()
@@ -76,7 +77,7 @@ def transaction():
             db.session.commit()
             # print("added Coin")
         # recognizing if buy or sell, if sell make number negative
-        if transform.buyOrsell.data == 1:
+        if transform.buyOrsell.data == True:
             transform.number.data = -transform.number.data
         coin = Coins.query.filter_by(short=transform.short.data).first()
         transaction = Transactions(user_id=current_user.id, coins_id=coin.id, number=transform.number.data, price=transform.price.data)
@@ -169,7 +170,5 @@ def check():
 
     data['amount'] = amount
     data['cash'] = cash
-
-    print(data)
 
     return jsonify(data)

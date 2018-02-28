@@ -12,10 +12,8 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    # email = StringField('Email', validators=[DataRequired(), Email()])
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    # password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -38,12 +36,12 @@ class TransForm(FlaskForm):
     submit = SubmitField()
 
     def validate_number(self, number):
-        # print("forms.py Data: {}, {}".format(self.userid.data, self.short.data))
+        # when selling (buyOrsell.data == True), checking if enough coins available
         if self.buyOrsell.data and number.data > totalcoin(self.userid.data, self.short.data):
             raise ValidationError('Not enough coins.')
-        else:
-            # print("validating buy transaction")
-            # buying (see if enough cash)
+        # when buying (buyOrsell.data == False), checking if enough cash available
+        if not self.buyOrsell.data:
+            print("validating buy transaction")
             cash = User.query.get(int(self.userid.data)).cash
             if (number.data * self.price.data) > cash:
                 raise ValidationError('Not enough cash.')
