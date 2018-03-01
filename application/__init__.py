@@ -5,8 +5,8 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 
-# from config import Config
-from configlocal import Config
+from config import Config
+#from configlocal import Config
 
 # configure application
 application = Flask(__name__)
