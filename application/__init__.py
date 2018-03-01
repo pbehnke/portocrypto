@@ -2,10 +2,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from jinja2 import FileSystemLoader
 from flask_login import LoginManager
+from flask_mail import Mail
+from flask_migrate import Migrate
 
-from config import Config
-# from configlocal import Config
-
+# from config import Config
+from configlocal import Config
 
 # configure application
 application = Flask(__name__)
@@ -19,6 +20,11 @@ login.login_view = 'login'
 
 # creating database instance
 db = SQLAlchemy(application)
+
+migrate = Migrate(application, db)
+
+# creating mail instance
+mail = Mail(application)
 
 # ensure responses aren't cached
 if application.config["DEBUG"]:

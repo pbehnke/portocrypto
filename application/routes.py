@@ -1,10 +1,15 @@
 import requests
-from application import application, db
+from application import application, db, mail
 from application.helpers import *
 from application.forms import LoginForm, RegistrationForm, TransForm, ChangeForm
-from flask_login import current_user, login_user,  login_required, logout_user
 from application.models import User, Transactions, Coins
-from flask import Flask, flash, redirect, render_template, request, session, url_for, jsonify
+from flask_login import current_user, login_user,  login_required, logout_user
+from flask_mail import Message
+from application.models import User, Transactions, Coins
+
+from itsdangerous import URLSafeTimedSerializer
+
+from flask import Flask, flash, redirect, render_template, request, session, url_for, jsonify, Markup
 from passlib.apps import custom_app_context as pwd_context
 
 
@@ -13,6 +18,7 @@ application.jinja_env.filters["percent"] = percent
 application.jinja_env.filters["number"] = number
 application.jinja_env.filters["time"] = timefilter
 application.jinja_env.filters["wnumber"] = wholenumber
+
 
 @application.route("/")
 @application.route('/index')
@@ -99,7 +105,9 @@ def login():
     if logform.validate_on_submit():
         user = User.query.filter_by(username=logform.username.data).first()
         if user is None or not user.check_password(logform.password.data):
-            return jsonify("User doesn't exist or Password wrong")
+            return jsonify("User doesn't exist or password wrong.")
+        if not user.emailconfirm:
+            return jsonify("Account not confirmed.")
         login_user(user, remember=logform.remember_me.data)
         return jsonify(status='ok')
     return jsonify("Error")
@@ -119,12 +127,45 @@ def register():
     regform = RegistrationForm()
 
     if regform.validate_on_submit():
-        user = User(username=regform.username.data, email=regform.email.data)
+        # sending email for registration confirmation
+        s = URLSafeTimedSerializer(application.config['SECRET_KEY'])
+        email = regform.email.data
+        token = s.dumps(email, salt='email-confirm')
+        msg = Message('Email Confirmation', sender="portocrypto@matejgrahovac.de", recipients=[email])
+        link = url_for('confirm_email', token=token, _external=True)
+        msg.body = 'Click here to confirm your account: {}'.format(link)
+        mail.send(msg)
+        # adding username and email to user db prototype
+        user = User(username=regform.username.data, email=email)
+        # adding
         user.set_password(regform.password.data)
         db.session.add(user)
         db.session.commit()
+        flash('To confirm your account, please follow the link we sent to {}.'.format(email))
         return jsonify(status='ok')
     return jsonify(regform.errors)
+
+@application.route('/confirm_email/<token>')
+def confirm_email(token):
+
+    s = URLSafeTimedSerializer(application.config['SECRET_KEY'])
+
+    try:
+        email = s.loads(token, salt="email-confirm", max_age=172800)
+    except SignatureExpired:
+        flash('The token is expired, please kill yourself!')
+        return redirect(url_for('index'))
+
+    user = User.query.filter_by(email=email).first()
+    if not user.emailconfirm:
+        user.emailconfirm = True
+        db.session.commit()
+    else:
+        flash("Account already confirmed.")
+        return redirect(url_for('index'))
+
+    flash(Markup('Account successfully confirmed, please <a class="alert-link" data-toggle="modal" href="#loginModal">log in.</a>'))
+    return redirect(url_for('index'))
 
 @application.route("/password", methods=["POST"])
 @login_required

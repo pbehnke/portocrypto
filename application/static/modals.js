@@ -40,8 +40,8 @@ $( document ).ready(function() {
       $.post("/register", data=$('#registerForm').serialize(), function(data) {
         if (data.status == 'ok') {
           $('#regModal').modal("hide");
-          $('#loginModal').modal("show");
-          // location.reload();
+          // $('#loginModal').modal("show");
+          location.reload();
         }
         else {
           console.log(data)
@@ -184,7 +184,7 @@ function openTransModal(short){
           $("#transTitle").text("Buy " + coinInfo.display_name);
           $("#transSubmit").val("Buy");
           max = allData.cash / coinInfo.price
-          $('#maxCoins').text("Max: $" + max);
+          $('#maxCoins').text("Max: " + max);
           $('#transNumber').attr('max', max)
           $("#transNumber").prop('required',true);
         }

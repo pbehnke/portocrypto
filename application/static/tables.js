@@ -16,20 +16,27 @@ $( document ).ready(function() {
   });
 
 
-  $("#portf").tablesorter({
-    headers: {
-      1: {
-          sorter:'fancyNumber'
+
+  try{
+    $("#portf").tablesorter({
+      headers: {
+        1: {
+            sorter:'fancyNumber'
+        },
+        3: {
+            sorter:'fancyNumber'
+        },
+        4: {
+            sorter:'fancyNumber'
+        }
       },
-      3: {
-          sorter:'fancyNumber'
-      },
-      4: {
-          sorter:'fancyNumber'
-      }
-    },
-    sortList: [[2,0]]
-  });
+      sortList: [[2,0]]
+    });
+
+  } catch(e) {
+    console.log("No Transactions. Nothing to Sort.")
+  }
+
 
   $("#allcoins").tablesorter({
     headers: {

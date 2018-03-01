@@ -8,6 +8,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
+    emailconfirm = db.Column(db.Boolean, default=False)
     password_hash = db.Column(db.String(128))
     cash = db.Column(db.Float, default=10000)
     transaction = db.relationship('Transactions', backref='transactor', lazy='dynamic')
